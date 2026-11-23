@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RunCoach 10K · Fuerza Adaptativa + Fechas y Objetivos (v3.2)</title>
+  <style>
+    :root {
+      --bg: #fdf8fa;
+      --surface: #ffffff;
+      --surface-soft: #faf2f6;
+      --surface-rose: #f6e7ef;
+      --surface-lilac: #f3effb;
+      --surface-mint: #eef7f3;
+      --surface-amber: #fff6e8;
+      --ink: #2c222b;
+      --muted: #6e5e6b;
+      --line: #eedde7;
+      --accent: #d95b8c;
+      --accent-dark: #b84270;
+      --accent-soft: rgba(217, 91, 140, 0.12);
+      --lilac: #8b6fd4;
+      --lilac-soft: rgba(139, 111, 212, 0.12);
+      --ok: #2e8b67;
+      --ok-soft: rgba(46, 139, 103, 0.12);
+      --warn: #c77c1e;
+      --warn-soft: rgba(199, 124, 30, 0.13);
+      --danger: #c84b68;
+      --danger-soft: rgba(200, 75, 104, 0.12);
+      --shadow: 0 10px 28px rgba(96, 52, 78, 0.06);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(circle at top right, rgba(235, 178, 206, 0.24), transparent 36%),
+        radial-gradient(circle at top left, rgba(196, 176, 242, 0.22), transparent 34%),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 20px 16px 64px;
+    }
+
+    .topbar {
+      background: linear-gradient(135deg, #ffffff 0%, #fdf2f7 56%, #f6f1fd 100%);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-dark);
+      background: var(--accent-soft);
+      padding: 5px 11px;
+      border-radius: 999px;
+    }
+
+    h1 {
+      margin: 8px 0 6px;
+      font-size: clamp(1.45rem, 2.6vw, 2.05rem);
+      line-height: 1.18;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      max-width: 720px;
+    }
+
+    .top-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .user-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 7px 13px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .sync-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--ok);
+      display: inline-block;
+    }
+
+    .sync-dot.cloud {
+      background: var(--lilac);
+    }
+
+    .btn {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 9px 14px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: transform 0.12s ease, background 0.15s ease, border-color 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      background: var(--surface-soft);
+      border-color: #e3c8d8;
+      transform: translateY(-1px);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), #c8649a);
+      color: #ffffff;
+      border-color: transparent;
+      box-shadow: 0 6px 16px rgba(217, 91, 140, 0.24);
+    }
+
+    .btn.primary:hover {
+      background: linear-gradient(135deg, var(--accent-dark), #b55288);
+    }
+
+    .btn.soft-lilac {
+      background: var(--lilac-soft);
+      color: #5b41a6;
+      border-color: rgba(139, 111, 212, 0.25);
+    }
+
+    .btn.small {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      border-radius: 10px;
+    }
+
+    .btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .profile-bar {
+      margin-top: 14px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .profile-summary {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      align-items: center;
+      font-size: 0.88rem;
+    }
+
+    .profile-badge {
+      background: var(--surface-rose);
+      color: var(--accent-dark);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .mode-switcher {
+      display: inline-flex;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 3px;
+      gap: 3px;
+    }
+
+    .mode-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 6px 11px;
+      border-radius: 9px;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .mode-btn.active {
+      background: #ffffff;
+      color: var(--accent-dark);
+      box-shadow: 0 2px 8px rgba(96, 52, 78, 0.08);
+    }
+
+    .grid-4 {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 520px) {
+      .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .kpi-value {
+      margin-top: 6px;
+      font-size: 1.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .kpi-sub {
+      margin-top: 4px;
+      font-size: 0.83rem;
+      color: var(--muted);
+    }
+
+    .panel {
+      margin-top: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .paces-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .paces-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 500px) {
+      .paces-grid { grid-template-columns: 1fr; }
+    }
+
+    .pace-box {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .pace-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+    }
+
+    .pace-val {
+      font-size: 1.06rem;
+      font-weight: 800;
+      margin: 3px 0;
+    }
+
+    .pace-treadmill {
+      font-size: 0.8rem;
+      color: #5b41a6;
+      font-weight: 600;
+      background: var(--surface-lilac);
+      border-radius: 8px;
+      padding: 5px 8px;
+      margin-top: 6px;
+    }
+
+    .pace-desc {
+      font-size: 0.79rem;
+      color: var(--muted);
+      margin-top: 5px;
+    }
+
+    .feedback-banner {
+      border-radius: 16px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #fff8fb 0%, #f7f3fe 100%);
+    }
+
+    .feedback-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 820px) {
+      .feedback-grid { grid-template-columns: 1fr; }
+    }
+
+    .fb-col {
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 13px;
+      font-size: 0.86rem;
+    }
+
+    .fb-col strong {
+      display: block;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+      color: var(--accent-dark);
+    }
+
+    .week-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .week-pill {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 12px;
+      padding: 8px 12px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .week-pill.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
+    .week-card {
+      margin-top: 16px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .week-top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .week-title {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .week-meta {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-top: 3px;
+    }
+
+    .progress-wrap {
+      min-width: 210px;
+    }
+
+    .progress-bar {
+      height: 9px;
+      background: var(--surface-rose);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--lilac));
+      border-radius: 999px;
+      transition: width 0.25s ease;
+    }
+
+    .days-grid {
+      margin-top: 16px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 820px) {
+      .days-grid { grid-template-columns: 1fr; }
+    }
+
+    .day-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px;
+      background: #fffdfd;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .day-card.status-done {
+      border-color: rgba(46, 139, 103, 0.35);
+      background: #f9fdfb;
+    }
+
+    .day-card.status-fatigued {
+      border-color: rgba(199, 124, 30, 0.42);
+      background: #fffcf7;
+    }
+
+    .day-card.status-skipped {
+      border-color: rgba(200, 75, 104, 0.38);
+      background: #fff9fb;
+    }
+
+    .day-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .day-name {
+      font-weight: 800;
+      font-size: 0.98rem;
+    }
+
+    .day-type {
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--surface-lilac);
+      color: #5b41a6;
+      white-space: nowrap;
+    }
+
+    .day-type.run {
+      background: var(--surface-rose);
+      color: var(--accent-dark);
+    }
+
+    .day-type.strength {
+      background: var(--surface-mint);
+      color: #1f6f50;
+    }
+
+    .day-type.rest {
+      background: var(--surface-amber);
+      color: #965c12;
+    }
+
+    .day-session-title {
+      font-weight: 700;
+      font-size: 0.93rem;
+      margin: 6px 0 4px;
+    }
+
+    .day-desc {
+      margin: 0;
+      font-size: 0.86rem;
+      color: var(--muted);
+    }
+
+    .modality-box {
+      margin-top: 8px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 9px 11px;
+      font-size: 0.81rem;
+    }
+
+    .modality-line {
+      margin: 3px 0;
+    }
+
+    .modality-tag {
+      font-weight: 700;
+      color: var(--accent-dark);
+    }
+
+    .modality-tag.treadmill {
+      color: #5b41a6;
+    }
+
+    .strength-adapt-tag {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: #1f6f50;
+      background: var(--surface-mint);
+      padding: 3px 8px;
+      border-radius: 8px;
+    }
+
+    .adjusted-note {
+      margin-top: 7px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #965c12;
+      background: var(--surface-amber);
+      padding: 6px 10px;
+      border-radius: 10px;
+    }
+
+    .day-inputs {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 8px;
+      align-items: center;
+    }
+
+    @media (max-width: 480px) {
+      .day-inputs { grid-template-columns: 1fr; }
+    }
+
+    label.mini-label {
+      display: block;
+      font-size: 0.73rem;
+      font-weight: 700;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #e4d2dd;
+      background: #ffffff;
+      color: var(--ink);
+      border-radius: 10px;
+      padding: 7px 10px;
+      font-size: 0.85rem;
+      font-family: inherit;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid rgba(217, 91, 140, 0.25);
+      border-color: var(--accent);
+    }
+
+    .status-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .status-btn {
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--ink);
+      border-radius: 9px;
+      padding: 6px 10px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    .status-btn.active-done {
+      background: var(--ok);
+      color: #fff;
+      border-color: var(--ok);
+    }
+
+    .status-btn.active-fatigued {
+      background: var(--warn);
+      color: #fff;
+      border-color: var(--warn);
+    }
+
+    .status-btn.active-skipped {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger);
+    }
+
+    .day-feedback {
+      background: var(--surface-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 9px 11px;
+      font-size: 0.81rem;
+    }
+
+    .day-feedback.done {
+      background: var(--surface-mint);
+      border-left-color: var(--ok);
+    }
+
+    .day-feedback.fatigued {
+      background: var(--surface-amber);
+      border-left-color: var(--warn);
+    }
+
+    .day-feedback.skipped {
+      background: var(--surface-rose);
+      border-left-color: var(--danger);
+    }
+
+    .strength-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .strength-grid { grid-template-columns: 1fr; }
+    }
+
+    .ex-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fffdfd;
+    }
+
+    .ex-svg-wrap {
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 8px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .ex-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin: 0 0 4px;
+    }
+
+    .ex-meta {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--accent-dark);
+      margin-bottom: 6px;
+    }
+
+    .ex-tip {
+      margin: 0;
+      font-size: 0.83rem;
+      color: var(--muted);
+    }
+
+    .km-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    @media (max-width: 720px) {
+      .km-list { grid-template-columns: 1fr; }
+    }
+
+    .km-item {
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.84rem;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(44, 34, 43, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 50;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 680px;
+      max-height: 90vh;
+      overflow-y: auto;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 24px 60px rgba(44, 34, 43, 0.22);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-title {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 580px) {
+      .form-grid { grid-template-columns: 1fr; }
+    }
+
+    .form-full {
+      grid-column: 1 / -1;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 16px 0;
+    }
+
+    .muted-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 15px;
+      border-radius: 12px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
+      z-index: 70;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header class="topbar">
+      <div>
+        <span class="eyebrow">RunCoach · Fuerza Adaptativa + Fechas y Objetivos · v3.2</span>
+        <h1 id="appHeading">Plan Adaptativo de Carrera y Fuerza</h1>
+        <p class="subtitle" id="appSubtitle">
+          Fechas y distancia objetivo personalizables, fuerza adaptada a tu meta y carga, exterior vs. cinta (km/h, inclinación y tiempo), feedback inteligente y sincronización cloud opcional.
+        </p>
+      </div>
+      <div class="top-controls">
+        <div class="user-pill" id="userPill">
+          <span class="sync-dot" id="syncDot"></span>
+          <span id="activeUserLabel">Usuario</span>
+        </div>
+        <button class="btn soft-lilac" id="openProfileBtn" type="button">Usuario y Objetivos</button>
+        <button class="btn" id="openCloudBtn" type="button">Nube / Firebase</button>
+        <button class="btn" id="exportJsonBtn" type="button">Exportar JSON</button>
+        <button class="btn" id="importJsonBtn" type="button">Importar JSON</button>
+        <input type="file" id="importFileInput" accept="application/json" style="display:none" />
+      </div>
+    </header>
+
+    <section class="profile-bar">
+      <div class="profile-summary" id="profileSummary"></div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center;">
+        <div class="mode-switcher" role="group" aria-label="Entorno de carrera">
+          <button class="mode-btn active" data-env="both" type="button">Exterior + Cinta</button>
+          <button class="mode-btn" data-env="outdoor" type="button">Solo Exterior</button>
+          <button class="mode-btn" data-env="treadmill" type="button">Solo Cinta</button>
+        </div>
+        <div class="mode-switcher" role="group" aria-label="Vista semanal">
+          <button class="mode-btn active" id="viewSingleBtn" type="button">Semana en Detalle</button>
+          <button class="mode-btn" id="viewAllBtn" type="button">Ver Todas</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid-4" id="kpiGrid"></section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title">Zonas de Ritmo Calculadas · Exterior (min/km) y Cinta (km/h + Inclinación)</h2>
+        <span class="muted-note" id="paceBasisNote"></span>
+      </div>
+      <div class="paces-grid" id="pacesGrid"></div>
+    </section>
+
+    <section class="panel" id="latestFeedbackPanel">
+      <div class="panel-header">
+        <h2 class="panel-title">Último Feedback del Entrenador</h2>
+        <span class="muted-note" id="feedbackTimestamp">Actualizado al marcar o guardar sesiones</span>
+      </div>
+      <div class="feedback-banner" id="latestFeedbackContent"></div>
+    </section>
+
+    <nav class="week-nav" id="weekNav" aria-label="Selector de semanas"></nav>
+
+    <main id="weeksContainer"></main>
+
+    <section class="panel">
+      <div class="panel-header">
+        <div>
+          <h2 class="panel-title" id="strengthSectionTitle">Fuerza Adaptativa · Gimnasio y Rutina Corta en Casa</h2>
+          <p class="muted-note" id="strengthAdaptationSummary" style="margin:4px 0 0;"></p>
+        </div>
+        <div class="mode-switcher" role="group" aria-label="Bloque de fuerza">
+          <button class="mode-btn active" data-strength-tab="gym" type="button">Gimnasio (Pierna + Brazo + Core)</button>
+          <button class="mode-btn" data-strength-tab="home" type="button">Casa 25–30 min (2 Mancuernas + Bandas)</button>
+        </div>
+      </div>
+      <div class="strength-grid" id="strengthGrid"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2 class="panel-title" id="strategyTitle">Estrategia Progresiva para el Día Objetivo</h2>
+        <span class="muted-note" id="strategySubtitle"></span>
+      </div>
+      <div class="km-list" id="strategyList"></div>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="profileModal" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 class="modal-title">Perfil de Usuario, Fechas y Objetivos</h3>
+        <button class="btn small" id="closeProfileBtn" type="button">Cerrar</button>
+      </div>
+
+      <div class="form-grid">
+        <div>
+          <label class="mini-label" for="selectExistingUser">Cambiar de usuario guardado</label>
+          <select id="selectExistingUser"></select>
+        </div>
+        <div>
+          <label class="mini-label" for="newUserName">O crear nuevo usuario</label>
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="newUserName" placeholder="Ej. Sofía, Lucía, Elena..." />
+            <button class="btn small primary" id="createUserBtn" type="button">Crear</button>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="form-grid">
+        <div>
+          <label class="mini-label" for="cfgName">Nombre visible</label>
+          <input type="text" id="cfgName" />
+        </div>
+        <div>
+          <label class="mini-label" for="cfgGoalPreset">Plantilla de objetivo / distancia</label>
+          <select id="cfgGoalPreset">
+            <option value="10k">10K + Mejorar marca de 5K (Clásico)</option>
+            <option value="5k">Mejorar marca de 5K / Velocidad</option>
+            <option value="15k">15K / Fondo aeróbico intermedio</option>
+            <option value="21k">Media Maratón (21,1 km) / Resistencia</option>
+            <option value="custom">Distancia y objetivo personalizados</option>
+          </select>
+        </div>
+        <div>
+          <label class="mini-label" for="cfgStartDate">Fecha de inicio (Semana 1)</label>
+          <input type="date" id="cfgStartDate" />
+        </div>
+        <div>
+          <label class="mini-label" for="cfgTargetDate">Fecha objetivo / carrera meta</label>
+          <input type="date" id="cfgTargetDate" />
+        </div>
+        <div>
+          <label class="mini-label" for="cfgTargetDistance">Distancia meta en km</label>
+          <input type="number" id="cfgTargetDistance" step="0.5" min="3" max="42.2" />
+        </div>
+        <div>
+          <label class="mini-label" for="cfg5kSec">Marca de referencia 5K (segundos totales)</label>
+          <input type="number" id="cfg5kSec" min="900" max="3000" step="5" />
+          <span class="muted-note" id="cfg5kFormatted"></span>
+        </div>
+        <div>
+          <label class="mini-label" for="cfgMainGoal">Objetivo principal</label>
+          <input type="text" id="cfgMainGoal" />
+        </div>
+        <div>
+          <label class="mini-label" for="cfgSecondaryGoal">Objetivo secundario</label>
+          <input type="text" id="cfgSecondaryGoal" />
+        </div>
+        <div class="form-full">
+          <label class="mini-label" for="cfgPreferredEnv">Entorno habitual de carrera</label>
+          <select id="cfgPreferredEnv">
+            <option value="both">Exterior + Cinta de correr</option>
+            <option value="outdoor">Principalmente Exterior</option>
+            <option value="treadmill">Principalmente Cinta de correr</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:16px; display:flex; justify-content:flex-end; gap:10px;">
+        <button class="btn" id="resetCurrentUserBtn" type="button">Restablecer registros del usuario</button>
+        <button class="btn primary" id="saveProfileBtn" type="button">Guardar cambios del perfil</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="cloudModal" aria-hidden="true">
+    <div class="modal">
+      <div class="modal-head">
+        <h3 class="modal-title">Sincronización en la Nube (Firebase Auth + Firestore)</h3>
+        <button class="btn small" id="closeCloudBtn" type="button">Cerrar</button>
+      </div>
+      <p class="muted-note">
+        La app guarda todo al instante en tu navegador y puede sincronizar perfiles y sesiones en la nube si introduces la configuración de un proyecto Firebase.
+      </p>
+      <div class="form-grid" style="margin-top:10px;">
+        <div>
+          <label class="mini-label" for="fbApiKey">apiKey</label>
+          <input type="text" id="fbApiKey" placeholder="AIzaSy..." />
+        </div>
+        <div>
+          <label class="mini-label" for="fbAuthDomain">authDomain</label>
+          <input type="text" id="fbAuthDomain" placeholder="tu-proyecto.firebaseapp.com" />
+        </div>
+        <div>
+          <label class="mini-label" for="fbProjectId">projectId</label>
+          <input type="text" id="fbProjectId" placeholder="tu-proyecto" />
+        </div>
+        <div>
+          <label class="mini-label" for="fbAppId">appId</label>
+          <input type="text" id="fbAppId" placeholder="1:123456:web:abcdef" />
+        </div>
+        <div>
+          <label class="mini-label" for="fbEmail">Correo de cuenta (opcional)</label>
+          <input type="text" id="fbEmail" placeholder="corredora@ejemplo.com" />
+        </div>
+        <div>
+          <label class="mini-label" for="fbSyncEnabled">Estado de sincronización</label>
+          <select id="fbSyncEnabled">
+            <option value="local">Solo navegador local (sin nube)</option>
+            <option value="cloud">Activar sincronización Firestore</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:16px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+        <button class="btn" id="testCloudSyncBtn" type="button">Probar / Sincronizar ahora</button>
+        <button class="btn primary" id="saveCloudBtn" type="button">Guardar ajustes de nube</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const STORAGE_KEY = "runcoach_10k_v3_2_state";
+
+    const GOAL_PRESETS = {
+      "10k": {
+        label: "10K + Mejorar 5K",
+        targetDistance: 10,
+        mainGoal: "Completar 10 km sólidos y mejorar marca de 5K",
+        secondaryGoal: "Fuerza constante + control de ritmo en exterior y cinta"
+      },
+      "5k": {
+        label: "Mejorar marca 5K",
+        targetDistance: 5,
+        mainGoal: "Bajar marca personal en 5 km con ritmo controlado",
+        secondaryGoal: "Potencia de pierna, economía de zancada y cambios de ritmo"
+      },
+      "15k": {
+        label: "15K Fondo Aeróbico",
+        targetDistance: 15,
+        mainGoal: "Construir base aeróbica para completar 15 km con solvencia",
+        secondaryGoal: "Resistencia muscular en tren inferior, core y espalda"
+      },
+      "21k": {
+        label: "Media Maratón (21,1K)",
+        targetDistance: 21.1,
+        mainGoal: "Preparar base sólida hacia 21,1 km sin sobrecarga",
+        secondaryGoal: "Gestión de fatiga, tiradas progresivas y estabilidad postural"
+      },
+      "custom": {
+        label: "Objetivo Personalizado",
+        targetDistance: 10,
+        mainGoal: "Alcanzar mi objetivo personalizado de carrera",
+        secondaryGoal: "Constancia semanal y fuerza adaptada a mi ritmo"
+      }
+    };
+
+    const BASE_WEEKS = [
+      {
+        week: 1,
+        phase: "Base y Toma de Contacto",
+        focus: "Adaptación articular, técnica y lectura de sensaciones (RPE)",
+        longFactor: 0.50,
+        strengthPhase: "base",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje suave base", distFactor: 0.40, rpeTarget: "RPE 4–5", incline: "0.5%", desc: "Ritmo conversacional cómodo para asentar zancada y respiración." },
+          { day: "Martes", type: "strength", title: "Fuerza integral A (pierna, brazo y core)", distFactor: 0, rpeTarget: "RPE 6", incline: "0%", desc: "Trabajo técnico de tren inferior, tren superior y estabilidad central." },
+          { day: "Miércoles", type: "run", title: "Progresivos suaves en recta", distFactor: 0.45, rpeTarget: "RPE 5–6", incline: "1.0%", desc: "Rodaje base con 4 rectas de 20 s ágiles sin forzar." },
+          { day: "Jueves", type: "rest", title: "Movilidad suave o descanso activo", distFactor: 0, rpeTarget: "RPE 2–3", incline: "0%", desc: "Caminata suave de 20–30 min o descanso completo." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (25–30 min)", distFactor: 0, rpeTarget: "RPE 6", incline: "0%", desc: "Circuito ágil con 2 mancuernas y banda elástica." },
+          { day: "Sábado", type: "run", title: "Tirada larga base", distFactor: 0.70, rpeTarget: "RPE 5", incline: "0.5%", desc: "Distancia cómoda y constante para construir confianza aeróbica." },
+          { day: "Domingo", type: "rest", title: "Recuperación total", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Descanso reparador y preparación de la semana siguiente." }
+        ]
+      },
+      {
+        week: 2,
+        phase: "Base y Toma de Contacto",
+        focus: "Consolidar continuidad y control en cinta y exterior",
+        longFactor: 0.55,
+        strengthPhase: "base",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje aeróbico controlado", distFactor: 0.42, rpeTarget: "RPE 4–5", incline: "0.5%", desc: "Mantén pulsaciones y respiración estables desde el minuto uno." },
+          { day: "Martes", type: "strength", title: "Fuerza integral A (pierna, brazo y core)", distFactor: 0, rpeTarget: "RPE 6–7", incline: "0%", desc: "Control excéntrico en piernas, postura de hombros y core." },
+          { day: "Miércoles", type: "run", title: "Fartlek suave de cadencia", distFactor: 0.48, rpeTarget: "RPE 5–6", incline: "1.0%", desc: "Alterna 2 min suaves con 1 min de ritmo vivo controlado." },
+          { day: "Jueves", type: "rest", title: "Descanso activo y movilidad", distFactor: 0, rpeTarget: "RPE 2–3", incline: "0%", desc: "Movilidad de cadera, tobillo y columna torácica." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (25–30 min)", distFactor: 0, rpeTarget: "RPE 6", incline: "0%", desc: "Mancuernas y banda para mantener tono sin cargar piernas." },
+          { day: "Sábado", type: "run", title: "Tirada larga progresiva suave", distFactor: 0.78, rpeTarget: "RPE 5–6", incline: "0.5%", desc: "Empieza cómodo y termina los últimos minutos ligeramente más vivo." },
+          { day: "Domingo", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Recuperación completa." }
+        ]
+      },
+      {
+        week: 3,
+        phase: "Construcción Aeróbica",
+        focus: "Primeros bloques de ritmo controlado y fuerza estable",
+        longFactor: 0.62,
+        strengthPhase: "build",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje regenerativo / base", distFactor: 0.44, rpeTarget: "RPE 4–5", incline: "0.5%", desc: "Ritmo relajado para asimilar la carga semanal." },
+          { day: "Martes", type: "strength", title: "Fuerza integral B (estabilidad + tren superior)", distFactor: 0, rpeTarget: "RPE 7", incline: "0%", desc: "Fuerza aplicada a la zancada y estabilidad del tronco." },
+          { day: "Miércoles", type: "run", title: "Bloques de ritmo crucero", distFactor: 0.52, rpeTarget: "RPE 6–7", incline: "1.0%", desc: "3 bloques de ritmo crucero con recuperación cómoda entre ellos." },
+          { day: "Jueves", type: "rest", title: "Descanso activo", distFactor: 0, rpeTarget: "RPE 2–3", incline: "0%", desc: "Paseo suave y estiramientos dinámicos." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (25–30 min)", distFactor: 0, rpeTarget: "RPE 6–7", incline: "0%", desc: "Circuito compacto con mancuernas y banda." },
+          { day: "Sábado", type: "run", title: "Tirada larga aeróbica", distFactor: 0.85, rpeTarget: "RPE 5–6", incline: "0.5%", desc: "Construcción de fondo sin forzar ritmo." },
+          { day: "Domingo", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Descanso." }
+        ]
+      },
+      {
+        week: 4,
+        phase: "Descarga y Asimilación",
+        focus: "Bajar volumen para absorber adaptación y limpiar fatiga",
+        longFactor: 0.52,
+        strengthPhase: "deload",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje suave de descarga", distFactor: 0.36, rpeTarget: "RPE 4", incline: "0.5%", desc: "Sensación ligera y sin prisas." },
+          { day: "Martes", type: "strength", title: "Fuerza técnica de descarga", distFactor: 0, rpeTarget: "RPE 5–6", incline: "0%", desc: "Menos series y repeticiones limpias para frescura." },
+          { day: "Miércoles", type: "run", title: "Toques suaves a ritmo objetivo", distFactor: 0.42, rpeTarget: "RPE 5–6", incline: "0.5%", desc: "Pequeños tramos ágiles manteniendo frescura." },
+          { day: "Jueves", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 2", incline: "0%", desc: "Descanso o movilidad suave." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (20–25 min)", distFactor: 0, rpeTarget: "RPE 5", incline: "0%", desc: "Activación suave con mancuernas y banda." },
+          { day: "Sábado", type: "run", title: "Tirada larga moderada de descarga", distFactor: 0.72, rpeTarget: "RPE 5", incline: "0.5%", desc: "Tirada cómoda para consolidar confianza." },
+          { day: "Domingo", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Descanso." }
+        ]
+      },
+      {
+        week: 5,
+        phase: "Calidad y Ritmo Objetivo",
+        focus: "Trabajo más específico de ritmo y economía de carrera",
+        longFactor: 0.70,
+        strengthPhase: "build",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje base cómodo", distFactor: 0.45, rpeTarget: "RPE 4–5", incline: "0.5%", desc: "Ritmo constante y relajado." },
+          { day: "Martes", type: "strength", title: "Fuerza integral A (fuerza y postura)", distFactor: 0, rpeTarget: "RPE 7", incline: "0%", desc: "Énfasis en cadera, glúteo, tracción de espalda y core." },
+          { day: "Miércoles", type: "run", title: "Series controladas a ritmo objetivo", distFactor: 0.56, rpeTarget: "RPE 7", incline: "1.0%", desc: "Repeticiones medidas con recuperaciones activas." },
+          { day: "Jueves", type: "rest", title: "Descanso activo", distFactor: 0, rpeTarget: "RPE 2–3", incline: "0%", desc: "Movilidad y recuperación." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (25–30 min)", distFactor: 0, rpeTarget: "RPE 6–7", incline: "0%", desc: "Trabajo complementario de fuerza y control." },
+          { day: "Sábado", type: "run", title: "Tirada larga de fondo", distFactor: 0.90, rpeTarget: "RPE 5–6", incline: "0.5%", desc: "Distancia larga para afianzar resistencia." },
+          { day: "Domingo", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Descanso." }
+        ]
+      },
+      {
+        week: 6,
+        phase: "Calidad y Ritmo Objetivo",
+        focus: "Sostener ritmos estables y evitar picos de esfuerzo",
+        longFactor: 0.76,
+        strengthPhase: "build",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje suave", distFactor: 0.46, rpeTarget: "RPE 4–5", incline: "0.5%", desc: "Rodaje fluido y controlado." },
+          { day: "Martes", type: "strength", title: "Fuerza integral B", distFactor: 0, rpeTarget: "RPE 7", incline: "0%", desc: "Fuerza unilateral, tren superior y core." },
+          { day: "Miércoles", type: "run", title: "Tempo controlado", distFactor: 0.58, rpeTarget: "RPE 7–8", incline: "1.0%", desc: "Bloque sostenido exigente pero controlado." },
+          { day: "Jueves", type: "rest", title: "Descanso activo", distFactor: 0, rpeTarget: "RPE 2–3", incline: "0%", desc: "Descanso y movilidad." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (25–30 min)", distFactor: 0, rpeTarget: "RPE 6–7", incline: "0%", desc: "Circuito de fuerza adaptable." },
+          { day: "Sábado", type: "run", title: "Tirada larga progresiva", distFactor: 0.95, rpeTarget: "RPE 6", incline: "0.5%", desc: "Tirada larga con tramo final ligeramente activo." },
+          { day: "Domingo", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Descanso." }
+        ]
+      },
+      {
+        week: 7,
+        phase: "Pico Específico",
+        focus: "Máxima especificidad de ritmo y tolerancia al esfuerzo",
+        longFactor: 0.82,
+        strengthPhase: "peak",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje suave de recuperación", distFactor: 0.45, rpeTarget: "RPE 4–5", incline: "0.5%", desc: "Soltura muscular y ritmo cómodo." },
+          { day: "Martes", type: "strength", title: "Fuerza específica de zancada y tronco", distFactor: 0, rpeTarget: "RPE 7", incline: "0%", desc: "Potencia controlada sin fatiga residual excesiva." },
+          { day: "Miércoles", type: "run", title: "Intervalos / ritmo objetivo", distFactor: 0.60, rpeTarget: "RPE 7–8", incline: "1.0%", desc: "Trabajo específico de ritmo con pausas limpias." },
+          { day: "Jueves", type: "rest", title: "Descanso activo", distFactor: 0, rpeTarget: "RPE 2–3", incline: "0%", desc: "Recuperación y estiramientos suaves." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (25 min)", distFactor: 0, rpeTarget: "RPE 6", incline: "0%", desc: "Fuerza de mantenimiento y core." },
+          { day: "Sábado", type: "run", title: "Tirada larga clave", distFactor: 1.00, rpeTarget: "RPE 6", incline: "0.5%", desc: "Tirada principal de preparación cercana a la meta." },
+          { day: "Domingo", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Descanso." }
+        ]
+      },
+      {
+        week: 8,
+        phase: "Pico Específico",
+        focus: "Consolidar ritmo objetivo y confianza mental",
+        longFactor: 0.75,
+        strengthPhase: "peak",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje base suave", distFactor: 0.44, rpeTarget: "RPE 4–5", incline: "0.5%", desc: "Ritmo tranquilo y zancada suelta." },
+          { day: "Martes", type: "strength", title: "Fuerza integral equilibrada", distFactor: 0, rpeTarget: "RPE 6–7", incline: "0%", desc: "Fuerza y estabilidad sin agotamiento." },
+          { day: "Miércoles", type: "run", title: "Bloques a ritmo meta", distFactor: 0.55, rpeTarget: "RPE 7", incline: "1.0%", desc: "Afianzar sensaciones del ritmo objetivo." },
+          { day: "Jueves", type: "rest", title: "Descanso activo", distFactor: 0, rpeTarget: "RPE 2–3", incline: "0%", desc: "Movilidad suave." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (20–25 min)", distFactor: 0, rpeTarget: "RPE 6", incline: "0%", desc: "Activación y postura." },
+          { day: "Sábado", type: "run", title: "Tirada larga controlada", distFactor: 0.88, rpeTarget: "RPE 5–6", incline: "0.5%", desc: "Tirada firme y controlada." },
+          { day: "Domingo", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Descanso." }
+        ]
+      },
+      {
+        week: 9,
+        phase: "Afinamiento (Tapering)",
+        focus: "Reducir fatiga acumulada conservando chispa",
+        longFactor: 0.58,
+        strengthPhase: "taper",
+        days: [
+          { day: "Lunes", type: "run", title: "Rodaje corto suave", distFactor: 0.36, rpeTarget: "RPE 4", incline: "0.5%", desc: "Corto y cómodo para acumular frescura." },
+          { day: "Martes", type: "strength", title: "Fuerza de chispa y control", distFactor: 0, rpeTarget: "RPE 5–6", incline: "0%", desc: "Volumen reducido, técnica limpia." },
+          { day: "Miércoles", type: "run", title: "Activación a ritmo objetivo", distFactor: 0.42, rpeTarget: "RPE 6", incline: "0.5%", desc: "Tramos cortos a ritmo meta sin cansancio." },
+          { day: "Jueves", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 2", incline: "0%", desc: "Descanso y sueño." },
+          { day: "Viernes", type: "strength", title: "Sesión corta en casa (15–20 min)", distFactor: 0, rpeTarget: "RPE 5", incline: "0%", desc: "Movilidad y core ligero." },
+          { day: "Sábado", type: "run", title: "Tirada suave de afinamiento", distFactor: 0.65, rpeTarget: "RPE 5", incline: "0.5%", desc: "Terminar con sensación de energía." },
+          { day: "Domingo", type: "rest", title: "Descanso", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Descanso." }
+        ]
+      },
+      {
+        week: 10,
+        phase: "Semana Meta",
+        focus: "Frescura máxima, activación suave y día objetivo",
+        longFactor: 1.00,
+        strengthPhase: "taper",
+        days: [
+          { day: "Lunes", type: "run", title: "Trote suave de activación", distFactor: 0.30, rpeTarget: "RPE 4", incline: "0.5%", desc: "Muy suave para soltar piernas." },
+          { day: "Martes", type: "strength", title: "Activación ligera y movilidad", distFactor: 0, rpeTarget: "RPE 4–5", incline: "0%", desc: "Pocos ejercicios y muy controlados." },
+          { day: "Miércoles", type: "run", title: "Trote corto con 3 rectas suaves", distFactor: 0.28, rpeTarget: "RPE 4–5", incline: "0.5%", desc: "Soltar y mantener sensaciones." },
+          { day: "Jueves", type: "rest", title: "Descanso y preparación", distFactor: 0, rpeTarget: "RPE 2", incline: "0%", desc: "Prepara material, hidratación y descanso." },
+          { day: "Viernes", type: "strength", title: "Movilidad suave en casa (15 min)", distFactor: 0, rpeTarget: "RPE 3–4", incline: "0%", desc: "Solo movilidad y respiración tranquila." },
+          { day: "Sábado", type: "run", title: "Día Objetivo / Prueba Meta", distFactor: 1.00, rpeTarget: "RPE 7–8", incline: "0.5%", desc: "Aplica tu estrategia progresiva y disfruta del objetivo." },
+          { day: "Domingo", type: "rest", title: "Celebración y recuperación", distFactor: 0, rpeTarget: "RPE 1–2", incline: "0%", desc: "Recupera, estira suave y celebra el camino." }
+        ]
+      }
+    ];
+
+    const GYM_EXERCISES = [
+      {
+        id: "squat",
+        name: "Sentadilla Goblet / Barra",
+        zone: "Tren inferior · Cuádriceps y glúteo",
+        baseSets: 3,
+        baseReps: "10–12",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <circle cx="60" cy="14" r="7" fill="#d95b8c"/>
+          <path d="M60 22 L48 40 L62 56" stroke="#2c222b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M48 40 L36 56" stroke="#8b6fd4" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M54 27 L70 33" stroke="#2c222b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </svg>`,
+        tip: "Peso repartido en el centro del pie, rodillas alineadas con la puntera y tronco erguido."
+      },
+      {
+        id: "rdl",
+        name: "Peso Muerto Rumano",
+        zone: "Tren inferior · Isquiosurales y glúteo",
+        baseSets: 3,
+        baseReps: "10–12",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <circle cx="74" cy="24" r="7" fill="#d95b8c"/>
+          <path d="M70 29 L44 37 L42 58" stroke="#2c222b" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M56 33 L56 54" stroke="#8b6fd4" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </svg>`,
+        tip: "Bisagra de cadera hacia atrás sintiendo estiramiento controlado en isquiosurales sin redondear lumbares."
+      },
+      {
+        id: "row",
+        name: "Remo con Mancuerna / Polea",
+        zone: "Tren superior · Dorsal y postura",
+        baseSets: 3,
+        baseReps: "10–12 / lado",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <circle cx="76" cy="25" r="7" fill="#8b6fd4"/>
+          <path d="M72 30 L42 36 L38 56" stroke="#2c222b" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M56 33 L54 47" stroke="#d95b8c" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </svg>`,
+        tip: "Lleva el codo hacia la cadera y junta ligeramente la escápula para contrarrestar la postura de correr."
+      },
+      {
+        id: "ohp",
+        name: "Press de Hombros",
+        zone: "Tren superior · Hombros y estabilidad",
+        baseSets: 3,
+        baseReps: "10–12",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <circle cx="60" cy="24" r="7" fill="#d95b8c"/>
+          <path d="M60 32 L60 56" stroke="#2c222b" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M60 36 L44 16 M60 36 L76 16" stroke="#8b6fd4" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </svg>`,
+        tip: "Mantén costillas encajadas y glúteo firme para no arquear la zona lumbar al empujar arriba."
+      },
+      {
+        id: "calf",
+        name: "Elevación de Gemelos",
+        zone: "Tren inferior · Gemelo y sóleo",
+        baseSets: 3,
+        baseReps: "12–15",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <circle cx="60" cy="13" r="7" fill="#d95b8c"/>
+          <path d="M60 21 L60 46 L52 59" stroke="#2c222b" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M60 46 L68 59" stroke="#8b6fd4" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>`,
+        tip: "Sube arriba con control y haz una breve pausa antes de bajar; protege tendón de Aquiles y sóleo."
+      },
+      {
+        id: "core",
+        name: "Plancha Frontal / Pallof Press",
+        zone: "Core · Estabilidad antirotación",
+        baseSets: 3,
+        baseReps: "30–40 s",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <circle cx="88" cy="34" r="6.5" fill="#8b6fd4"/>
+          <path d="M82 37 L34 45" stroke="#d95b8c" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M68 40 L68 55 M34 45 L24 55" stroke="#2c222b" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </svg>`,
+        tip: "Transmite fuerza entre tren inferior y superior sin que caiga la cadera."
+      }
+    ];
+
+    const HOME_EXERCISES = [
+      {
+        id: "h_squat_curl",
+        name: "Sentadilla + Curl / Press con Mancuernas",
+        zone: "Pierna + brazo · 2 mancuernas",
+        baseSets: 3,
+        baseReps: "10–12",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <circle cx="60" cy="15" r="7" fill="#d95b8c"/>
+          <path d="M60 23 L48 41 L62 56" stroke="#2c222b" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M55 29 L42 22 M65 29 L78 22" stroke="#8b6fd4" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+        </svg>`,
+        tip: "Coordina un movimiento fluido y controlado en sala o casa sin necesidad de máquinas."
+      },
+      {
+        id: "h_band_pull",
+        name: "Pull-Apart con Banda Elástica",
+        zone: "Espalda alta y hombro posterior",
+        baseSets: 3,
+        baseReps: "15",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <circle cx="60" cy="16" r="7" fill="#8b6fd4"/>
+          <path d="M60 24 L60 54" stroke="#2c222b" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M36 31 L84 31" stroke="#d95b8c" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>`,
+        tip: "Separa la banda a la altura del pecho con brazos casi extendidos y hombros lejos de las orejas."
+      },
+      {
+        id: "h_glute_bridge",
+        name: "Puente de Glúteo + Banda en Rodillas",
+        zone: "Glúteo y estabilidad de cadera",
+        baseSets: 3,
+        baseReps: "12–15",
+        svg: `<svg viewBox="0 0 120 72" width="120" height="72" aria-hidden="true">
+          <path d="M26 52 L54 34 L86 52" stroke="#d95b8c" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="22" cy="48" r="6" fill="#8b6fd4"/>
+        </svg>`,
+        tip: "Mantén suave tensión hacia fuera en la banda y aprieta glúteo arriba 1 segundo."
+      }
+    ];
+
+    function defaultUserProfile(id, name, goalPreset = "10k") {
+      const preset = GOAL_PRESETS[goalPreset] || GOAL_PRESETS["10k"];
+      return {
+        id,
+        name,
+        goalPreset,
+        startDate: "2026-11-23",
+        targetDate: "2027-01-31",
+        targetDistance: preset.targetDistance,
+        pace5kSec: 1500,
+        mainGoal: preset.mainGoal,
+        secondaryGoal: preset.secondaryGoal,
+        preferredEnv: "both",
+        logs: {},
+        lastFeedback: null
+      };
+    }
+
+    function createInitialState() {
+      const sofia = defaultUserProfile("sofia", "Sofía", "10k");
+      return {
+        activeUserId: "sofia",
+        selectedWeek: 1,
+        viewMode: "single",
+        envMode: "both",
+        strengthTab: "gym",
+        users: {
+          sofia
+        },
+        cloud: {
+          mode: "local",
+          apiKey: "",
+          authDomain: "",
+          projectId: "",
+          appId: "",
+          email: "",
+          lastSync: null
+        }
+      };
+    }
+
+    let state = loadState();
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return createInitialState();
+        const parsed = JSON.parse(raw);
+        const base = createInitialState();
+        const merged = {
+          ...base,
+          ...parsed,
+          cloud: { ...base.cloud, ...(parsed.cloud || {}) },
+          users: parsed.users && Object.keys(parsed.users).length ? parsed.users : base.users
+        };
+        if (!merged.users[merged.activeUserId]) {
+          merged.activeUserId = Object.keys(merged.users)[0];
+        }
+        return merged;
+      } catch (e) {
+        return createInitialState();
+      }
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        if (state.cloud.mode === "cloud" && state.cloud.projectId) {
+          state.cloud.lastSync = new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" });
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+      } catch (e) {
+        // Fallback silencioso si el almacenamiento local esta restringido
+      }
+    }
+
+    function getUser() {
+      return state.users[state.activeUserId];
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => el.classList.remove("show"), 2600);
+    }
+
+    function formatTimeMMSS(totalSec) {
+      const s = Math.max(0, Math.round(totalSec));
+      const mins = Math.floor(s / 60);
+      const secs = s % 60;
+      return `${mins}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function formatPaceSec(secPerKm) {
+      const s = Math.max(180, Math.round(secPerKm));
+      const mins = Math.floor(s / 60);
+      const secs = s % 60;
+      return `${mins}:${String(secs).padStart(2, "0")}/km`;
+    }
+
+    function paceToKmh(secPerKm) {
+      if (!secPerKm || secPerKm <= 0) return "0.0";
+      return (3600 / secPerKm).toFixed(1);
+    }
+
+    function estimateDurationText(distKm, paceSecPerKm) {
+      if (!distKm || distKm <= 0) return "";
+      const totalMins = Math.round((distKm * paceSecPerKm) / 60);
+      if (totalMins < 60) return `~${totalMins} min`;
+      const h = Math.floor(totalMins / 60);
+      const m = totalMins % 60;
+      return `~${h}h ${String(m).padStart(2, "0")}m`;
+    }
+
+    function calculateZones(pace5kSec) {
+      const pace10k = pace5kSec / 5 * 1.06;
+      const easyMin = pace10k * 1.16;
+      const easyMax = pace10k * 1.24;
+      const tempoMin = pace10k * 0.99;
+      const tempoMax = pace10k * 1.03;
+      const intervalMin = (pace5kSec / 5) * 0.97;
+      const intervalMax = (pace5kSec / 5) * 1.01;
+      const goalMin = pace10k * 1.00;
+      const goalMax = pace10k * 1.05;
+
+      return {
+        easy: {
+          label: "Rodaje Base / Suave",
+          minSec: easyMin,
+          maxSec: easyMax,
+          text: `${formatPaceSec(easyMin)} – ${formatPaceSec(easyMax)}`,
+          treadmill: `${paceToKmh(easyMax)} – ${paceToKmh(easyMin)} km/h · Incl. 0.5%`,
+          desc: "Respiración fluida, base aeróbica y recuperación."
+        },
+        goal: {
+          label: "Ritmo Objetivo / Crucero",
+          minSec: goalMin,
+          maxSec: goalMax,
+          text: `${formatPaceSec(goalMin)} – ${formatPaceSec(goalMax)}`,
+          treadmill: `${paceToKmh(goalMax)} – ${paceToKmh(goalMin)} km/h · Incl. 0.5–1.0%`,
+          desc: "Ritmo constante sostenible para bloques largos y meta."
+        },
+        tempo: {
+          label: "Tempo / Umbral Controlado",
+          minSec: tempoMin,
+          maxSec: tempoMax,
+          text: `${formatPaceSec(tempoMin)} – ${formatPaceSec(tempoMax)}`,
+          treadmill: `${paceToKmh(tempoMax)} – ${paceToKmh(tempoMin)} km/h · Incl. 1.0%`,
+          desc: "Esfuerzo firme y controlado sin perder técnica."
+        },
+        interval: {
+          label: "Series / Repeticiones Ágiles",
+          minSec: intervalMin,
+          maxSec: intervalMax,
+          text: `${formatPaceSec(intervalMin)} – ${formatPaceSec(intervalMax)}`,
+          treadmill: `${paceToKmh(intervalMax)} – ${paceToKmh(intervalMin)} km/h · Incl. 1.0%`,
+          desc: "Trabajo de velocidad y economía de zancada."
+        }
+      };
+    }
+
+    function getWeekDateRange(user, weekNum) {
+      const start = new Date(`${user.startDate}T00:00:00`);
+      if (Number.isNaN(start.getTime())) return `Semana ${weekNum}`;
+      const wStart = new Date(start.getTime() + (weekNum - 1) * 7 * 86400000);
+      const wEnd = new Date(wStart.getTime() + 6 * 86400000);
+      const opts = { day: "numeric", month: "short" };
+      return `${wStart.toLocaleDateString("es-ES", opts)} – ${wEnd.toLocaleDateString("es-ES", opts)}`;
+    }
+
+    function getDayDateFormatted(user, weekNum, dayIndex) {
+      const start = new Date(`${user.startDate}T00:00:00`);
+      if (Number.isNaN(start.getTime())) return "";
+      const d = new Date(start.getTime() + ((weekNum - 1) * 7 + dayIndex) * 86400000);
+      return d.toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+    }
+
+    function getFatigueSignals(user) {
+      let fatiguedCount = 0;
+      let skippedCount = 0;
+      Object.values(user.logs || {}).forEach((entry) => {
+        if (entry.status === "fatigued") fatiguedCount++;
+        if (entry.status === "skipped") skippedCount++;
+      });
+      return {
+        fatiguedCount,
+        skippedCount,
+        needsRelief: fatiguedCount >= 1 || skippedCount >= 2
+      };
+    }
+
+    function getStrengthAdaptation(user) {
+      const signals = getFatigueSignals(user);
+      const weekObj = BASE_WEEKS[state.selectedWeek - 1] || BASE_WEEKS[0];
+      const dist = Number(user.targetDistance) || 10;
+
+      let setDelta = 0;
+      let repFocus = "10–12 reps · Control técnico";
+      let focusNote = "";
+
+      if (signals.needsRelief) {
+        setDelta = -1;
+        repFocus = "8–10 reps · Carga moderada y cero fatiga residual";
+        focusNote = "Ajuste por fatiga/saltos: reducimos 1 serie para proteger piernas y recuperación.";
+      } else if (weekObj.strengthPhase === "deload" || weekObj.strengthPhase === "taper") {
+        setDelta = -1;
+        repFocus = "8–10 reps · Chispa y frescura";
+        focusNote = "Fase de descarga/afinamiento: menos volumen para llegar fresca a la carrera.";
+      } else if (dist >= 15) {
+        setDelta = 0;
+        repFocus = "12–15 reps · Resistencia muscular y postura larga";
+        focusNote = `Objetivo de fondo (${dist} km): priorizamos aguante muscular, glúteo medio y core.`;
+      } else if (dist <= 5.5) {
+        setDelta = 0;
+        repFocus = "8–10 reps · Fuerza y reactividad";
+        focusNote = "Objetivo de 5K: priorizamos fuerza limpia, impulso y economía de zancada.";
+      } else {
+        setDelta = 0;
+        repFocus = "10–12 reps · Equilibrio fuerza + resistencia";
+        focusNote = "Objetivo 10K: equilibrio entre fuerza de tren inferior, tren superior y estabilidad.";
+      }
+
+      return { setDelta, repFocus, focusNote, weekObj };
+    }
+
+    function getComputedDay(user, weekObj, dayObj, dayIndex) {
+      const key = `w${weekObj.week}_d${dayIndex}`;
+      const log = user.logs[key] || { status: "pending", rpe: "", notes: "", feedback: null };
+      const zones = calculateZones(user.pace5kSec);
+      const signals = getFatigueSignals(user);
+      const targetDist = Number(user.targetDistance) || 10;
+
+      let baseKm = 0;
+      let activeZone = zones.easy;
+      let adjustedReason = "";
+
+      if (dayObj.type === "run") {
+        if (weekObj.week === 10 && dayObj.day === "Sábado") {
+          baseKm = targetDist;
+          activeZone = zones.goal;
+        } else if (dayObj.day === "Sábado") {
+          const baseLong = targetDist * weekObj.longFactor;
+          if (signals.needsRelief) {
+            baseKm = Number((baseLong * 0.88).toFixed(1));
+            adjustedReason = `Tirada larga ajustada -12% (${baseLong.toFixed(1)} km -> ${baseKm} km) por fatiga alta o sesiones saltadas.`;
+          } else {
+            baseKm = Number(baseLong.toFixed(1));
+          }
+          activeZone = weekObj.week >= 6 ? zones.goal : zones.easy;
+        } else if (dayObj.title.toLowerCase().includes("series") || dayObj.title.toLowerCase().includes("intervalos")) {
+          baseKm = Number((targetDist * dayObj.distFactor).toFixed(1));
+          activeZone = zones.interval;
+        } else if (dayObj.title.toLowerCase().includes("tempo") || dayObj.title.toLowerCase().includes("ritmo")) {
+          baseKm = Number((targetDist * dayObj.distFactor).toFixed(1));
+          activeZone = zones.tempo;
+        } else {
+          baseKm = Number((targetDist * dayObj.distFactor).toFixed(1));
+          activeZone = zones.easy;
+        }
+      }
+
+      const midPace = (activeZone.minSec + activeZone.maxSec) / 2;
+      const estTime = dayObj.type === "run" ? estimateDurationText(baseKm, midPace) : "";
+      const speedRange = dayObj.type === "run"
+        ? `${paceToKmh(activeZone.maxSec)} – ${paceToKmh(activeZone.minSec)} km/h`
+        : "";
+
+      return {
+        key,
+        log,
+        baseKm,
+        activeZone,
+        estTime,
+        speedRange,
+        adjustedReason
+      };
+    }
+
+    function buildSessionFeedback(user, weekObj, dayObj, comp) {
+      const rpeNum = Number(comp.log.rpe);
+      const status = comp.log.status;
+      const notes = (comp.log.notes || "").trim();
+
+      let reading = "";
+      let encouragement = "";
+      let nextStep = "";
+
+      if (status === "done") {
+        encouragement = `¡Muy bien, ${user.name}! Has completado "${dayObj.title}" (${weekObj.phase}). Cada sesión sumada construye tu base real hacia ${user.mainGoal}.`;
+        if (!Number.isNaN(rpeNum) && rpeNum > 0) {
+          if (rpeNum >= 8 && dayObj.type === "run" && !dayObj.title.toLowerCase().includes("objetivo")) {
+            reading = `La sesión salió adelante, aunque el RPE (${rpeNum}/10) fue algo alto para el bloque programado.`;
+            nextStep = "En la próxima salida sal 10–15 s/km más suave los primeros 10 minutos y revisa hidratación o descanso previo.";
+          } else if (rpeNum <= 4 && dayObj.type === "strength") {
+            reading = `Completada con sensación cómoda (RPE ${rpeNum}/10), señal de buen control técnico y margen de carga.`;
+            nextStep = "Si mantienes esta soltura sin molestias, podrás consolidar técnica o ajustar carga de forma progresiva.";
+          } else {
+            reading = `Esfuerzo alineado (RPE ${rpeNum}/10) con la intención de la sesión y buena continuidad.`;
+            nextStep = "Mantén este control de ritmo/técnica y respeta la recuperación antes de la siguiente sesión clave.";
+          }
+        } else {
+          reading = "Sesión marcada como completada con constancia.";
+          nextStep = notes
+            ? `Ten en cuenta tu nota ("${notes}") para ajustar el calentamiento o el ritmo en el próximo entreno.`
+            : "Anota tu RPE del 1 al 10 si quieres un análisis aún más fino de tu esfuerzo.";
+        }
+      } else if (status === "fatigued") {
+        encouragement = `Buen trabajo escuchando a tu cuerpo, ${user.name}. Detectar fatiga a tiempo evita lesiones y te mantiene en el plan a largo plazo.`;
+        reading = `Has marcado fatiga alta${rpeNum ? ` (RPE ${rpeNum}/10)` : ""}. Puede deberse a acumulación de carga, falta de sueño, calor/cinta o haber salido rápido al inicio.`;
+        nextStep = "Se activa precaución adaptativa: baja la exigencia en la próxima sesión y prioriza descanso, sueño y movilidad.";
+      } else if (status === "skipped") {
+        encouragement = `No pasa nada por saltarte una sesión, ${user.name}. Un plan de 10 semanas se gana por la media de constancia, no por la perfección de un solo día.`;
+        reading = notes
+          ? `Sesión saltada con nota: "${notes}". Suele ocurrir por agenda ajustada, cansancio o molestias leves.`
+          : "Sesión saltada. Lo importante es no intentar recuperarla toda de golpe en un solo día.";
+        nextStep = "Retoma el plan con normalidad en el siguiente día y deja que el ajuste adaptativo proteja tu tirada larga si hubo varios saltos.";
+      } else {
+        reading = "Sesión pendiente de registro.";
+        encouragement = "Cuando termines, marca su estado y tu RPE para recibir análisis y ánimos.";
+        nextStep = "Revisa los ritmos de exterior y cinta antes de salir.";
+      }
+
+      return {
+        reading,
+        encouragement,
+        nextStep,
+        updatedAt: new Date().toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })
+      };
+    }
+
+    function renderAll() {
+      const user = getUser();
+      const zones = calculateZones(user.pace5kSec);
+      const signals = getFatigueSignals(user);
+      const strengthAdapt = getStrengthAdaptation(user);
+
+      document.getElementById("activeUserLabel").textContent = `${user.name} · ${GOAL_PRESETS[user.goalPreset]?.label || "Objetivo"}`;
+      const syncDot = document.getElementById("syncDot");
+      if (state.cloud.mode === "cloud" && state.cloud.projectId) {
+        syncDot.classList.add("cloud");
+        document.getElementById("userPill").title = `Nube activa (${state.cloud.projectId})`;
+      } else {
+        syncDot.classList.remove("cloud");
+        document.getElementById("userPill").title = "Guardado local en navegador";
+      }
+
+      document.getElementById("profileSummary").innerHTML = `
+        <span class="profile-badge">Meta: ${user.targetDistance} km · ${user.targetDate}</span>
+        <span><strong>Principal:</strong> ${escapeHtml(user.mainGoal)}</span>
+        <span><strong>Secundario:</strong> ${escapeHtml(user.secondaryGoal)}</span>
+        <span><strong>Base 5K:</strong> ${formatTimeMMSS(user.pace5kSec)}</span>
+      `;
+
+      document.querySelectorAll('[data-env]').forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.env === state.envMode);
+      });
+      document.getElementById("viewSingleBtn").classList.toggle("active", state.viewMode === "single");
+      document.getElementById("viewAllBtn").classList.toggle("active", state.viewMode === "all");
+
+      let doneSessions = 0;
+      let totalRunKmDone = 0;
+      BASE_WEEKS.forEach((w) => {
+        w.days.forEach((d, idx) => {
+          const comp = getComputedDay(user, w, d, idx);
+          if (comp.log.status === "done") {
+            doneSessions++;
+            if (d.type === "run") totalRunKmDone += comp.baseKm;
+          }
+        });
+      });
+
+      const targetMs = new Date(`${user.targetDate}T00:00:00`).getTime();
+      const nowMs = new Date().setHours(0, 0, 0, 0);
+      const daysLeft = Number.isNaN(targetMs) ? "—" : Math.max(0, Math.ceil((targetMs - nowMs) / 86400000));
+
+      document.getElementById("kpiGrid").innerHTML = `
+        <div class="kpi-card">
+          <div class="kpi-label">Cuenta Atrás a la Meta</div>
+          <div class="kpi-value">${daysLeft === "—" ? "—" : `${daysLeft} días`}</div>
+          <div class="kpi-sub">Inicio ${user.startDate} · Meta ${user.targetDate}</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Sesiones Completadas</div>
+          <div class="kpi-value">${doneSessions} / 70</div>
+          <div class="kpi-sub">${signals.fatiguedCount} fatiga alta · ${signals.skippedCount} saltadas</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Kilómetros Completados</div>
+          <div class="kpi-value">${totalRunKmDone.toFixed(1)} km</div>
+          <div class="kpi-sub">Distancia objetivo: ${user.targetDistance} km</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Ajuste Adaptativo</div>
+          <div class="kpi-value">${signals.needsRelief ? "-12% Tirada" : "Activo"}</div>
+          <div class="kpi-sub">${signals.needsRelief ? "Descarga preventiva activada" : "Ritmos y fuerza sincronizados"}</div>
+        </div>
+      `;
+
+      document.getElementById("paceBasisNote").textContent =
+        `Calculado desde marca 5K de ${formatTimeMMSS(user.pace5kSec)} · Cinta en km/h con ligera inclinación`;
+
+      document.getElementById("pacesGrid").innerHTML = Object.values(zones).map((z) => `
+        <div class="pace-box">
+          <div class="pace-name">${z.label}</div>
+          ${state.envMode !== "treadmill" ? `<div class="pace-val">Exterior: ${z.text}</div>` : ""}
+          ${state.envMode !== "outdoor" ? `<div class="pace-treadmill">Cinta: ${z.treadmill}</div>` : ""}
+          <div class="pace-desc">${z.desc}</div>
+        </div>
+      `).join("");
+
+      const fb = user.lastFeedback;
+      if (fb) {
+        document.getElementById("feedbackTimestamp").textContent = `Último análisis a las ${fb.updatedAt}`;
+        document.getElementById("latestFeedbackContent").innerHTML = `
+          <div style="font-weight:700; font-size:0.95rem;">${escapeHtml(fb.encouragement)}</div>
+          <div class="feedback-grid">
+            <div class="fb-col">
+              <strong>Qué ha podido pasar</strong>
+              ${escapeHtml(fb.reading)}
+            </div>
+            <div class="fb-col">
+              <strong>Ánimos y lectura</strong>
+              ${escapeHtml(fb.encouragement)}
+            </div>
+            <div class="fb-col">
+              <strong>Qué mejorar / Siguiente paso</strong>
+              ${escapeHtml(fb.nextStep)}
+            </div>
+          </div>
+        `;
+      } else {
+        document.getElementById("feedbackTimestamp").textContent = "Aún sin sesiones registradas";
+        document.getElementById("latestFeedbackContent").innerHTML = `
+          <div style="font-weight:700;">¡Bienvenida, ${escapeHtml(user.name)}!</div>
+          <p style="margin:6px 0 0; font-size:0.88rem; color:var(--muted);">
+            Cuando marques un entrenamiento como <strong>Hecho</strong>, <strong>Fatiga alta</strong> o <strong>Saltado</strong> (o guardes su RPE y notas), aquí aparecerá el análisis completo de la sesión.
+          </p>
+        `;
+      }
+
+      document.getElementById("weekNav").innerHTML = BASE_WEEKS.map((w) => `
+        <button class="week-pill ${w.week === state.selectedWeek ? "active" : ""}" data-week="${w.week}" type="button">
+          S${w.week} · ${getWeekDateRange(user, w.week)}
+        </button>
+      `).join("");
+
+      const weeksToShow = state.viewMode === "all"
+        ? BASE_WEEKS
+        : [BASE_WEEKS[state.selectedWeek - 1] || BASE_WEEKS[0]];
+
+      document.getElementById("weeksContainer").innerHTML = weeksToShow.map((w) => {
+        let weekDone = 0;
+        let weekRunKm = 0;
+
+        const daysHtml = w.days.map((d, idx) => {
+          const comp = getComputedDay(user, w, d, idx);
+          if (comp.log.status === "done") {
+            weekDone++;
+            if (d.type === "run") weekRunKm += comp.baseKm;
+          }
+
+          const statusClass = comp.log.status === "done"
+            ? "status-done"
+            : comp.log.status === "fatigued"
+              ? "status-fatigued"
+              : comp.log.status === "skipped"
+                ? "status-skipped"
+                : "";
+
+          const typeBadgeClass = d.type === "run"
+            ? "run"
+            : d.type === "strength"
+              ? "strength"
+              : "rest";
+
+          const typeLabel = d.type === "run"
+            ? "Carrera"
+            : d.type === "strength"
+              ? "Fuerza"
+              : "Descanso";
+
+          let modalityHtml = "";
+          if (d.type === "run") {
+            const outdoorBlock = state.envMode !== "treadmill"
+              ? `<div class="modality-line"><span class="modality-tag">Exterior:</span> ${comp.baseKm} km · Ritmo ${comp.activeZone.text} · Tiempo ${comp.estTime}</div>`
+              : "";
+            const treadmillBlock = state.envMode !== "outdoor"
+              ? `<div class="modality-line"><span class="modality-tag treadmill">Cinta:</span> ${comp.baseKm} km · Velocidad ${comp.speedRange} · Inclinación ${d.incline} · Tiempo ${comp.estTime}</div>`
+              : "";
+            modalityHtml = `<div class="modality-box">${outdoorBlock}${treadmillBlock}</div>`;
+          } else if (d.type === "strength") {
+            const adaptedSets = Math.max(2, 3 + strengthAdapt.setDelta);
+            modalityHtml = `<div class="strength-adapt-tag">Adaptado (${adaptedSets} series · ${strengthAdapt.repFocus})</div>`;
+          }
+
+          const fbBox = comp.log.feedback
+            ? `<div class="day-feedback ${comp.log.status}">
+                <div><strong>Lectura:</strong> ${escapeHtml(comp.log.feedback.reading)}</div>
+                <div style="margin-top:4px;"><strong>Mejora / Siguiente:</strong> ${escapeHtml(comp.log.feedback.nextStep)}</div>
+              </div>`
+            : "";
+
+          return `
+            <article class="day-card ${statusClass}" data-day-key="${comp.key}">
+              <div>
+                <div class="day-head">
+                  <div>
+                    <div class="day-name">${d.day} <span class="muted-note">(${getDayDateFormatted(user, w.week, idx)})</span></div>
+                    <div class="day-session-title">${escapeHtml(d.title)}</div>
+                  </div>
+                  <span class="day-type ${typeBadgeClass}">${typeLabel} · ${d.rpeTarget}</span>
+                </div>
+                <p class="day-desc">${escapeHtml(d.desc)}</p>
+                ${modalityHtml}
+                ${comp.adjustedReason ? `<div class="adjusted-note">${escapeHtml(comp.adjustedReason)}</div>` : ""}
+              </div>
+
+              <div class="day-inputs">
+                <div>
+                  <label class="mini-label" for="rpe_${comp.key}">RPE real (1–10)</label>
+                  <input type="number" id="rpe_${comp.key}" min="1" max="10" value="${escapeAttr(comp.log.rpe)}" placeholder="Ej. 6" />
+                </div>
+                <div>
+                  <label class="mini-label" for="note_${comp.key}">Nota / sensaciones</label>
+                  <input type="text" id="note_${comp.key}" value="${escapeAttr(comp.log.notes)}" placeholder="Ej. Gemelos cargados, buena cinta..." />
+                </div>
+              </div>
+
+              <div class="status-actions">
+                <button class="status-btn ${comp.log.status === "done" ? "active-done" : ""}" data-action="done" data-week="${w.week}" data-day="${idx}" type="button">Hecho</button>
+                <button class="status-btn ${comp.log.status === "fatigued" ? "active-fatigued" : ""}" data-action="fatigued" data-week="${w.week}" data-day="${idx}" type="button">Fatiga alta</button>
+                <button class="status-btn ${comp.log.status === "skipped" ? "active-skipped" : ""}" data-action="skipped" data-week="${w.week}" data-day="${idx}" type="button">Saltado</button>
+                <button class="btn small" data-action="save-only" data-week="${w.week}" data-day="${idx}" type="button">Guardar y analizar</button>
+              </div>
+
+              ${fbBox}
+            </article>
+          `;
+        }).join("");
+
+        const pct = Math.round((weekDone / w.days.length) * 100);
+
+        return `
+          <section class="week-card">
+            <div class="week-top">
+              <div>
+                <h2 class="week-title">Semana ${w.week} · ${escapeHtml(w.phase)} <span class="muted-note">(${getWeekDateRange(user, w.week)})</span></h2>
+                <div class="week-meta">${escapeHtml(w.focus)} · Volumen carrera planificado: <strong>${weekRunKm.toFixed(1)} km</strong></div>
+              </div>
+              <div class="progress-wrap">
+                <div style="display:flex; justify-content:space-between; font-size:0.82rem; font-weight:700;">
+                  <span>Progreso semanal</span>
+                  <span>${weekDone}/${w.days.length} (${pct}%)</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width:${pct}%"></div>
+                </div>
+              </div>
+            </div>
+            <div class="days-grid">${daysHtml}</div>
+          </section>
+        `;
+      }).join("");
+
+      document.querySelectorAll('[data-strength-tab]').forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.strengthTab === state.strengthTab);
+      });
+
+      document.getElementById("strengthAdaptationSummary").textContent = strengthAdapt.focusNote;
+
+      const exercises = state.strengthTab === "gym" ? GYM_EXERCISES : HOME_EXERCISES;
+      document.getElementById("strengthGrid").innerHTML = exercises.map((ex) => {
+        const sets = Math.max(2, ex.baseSets + strengthAdapt.setDelta);
+        const reps = ex.id === "core" ? ex.baseReps : strengthAdapt.repFocus;
+        return `
+          <div class="ex-card">
+            <div class="ex-svg-wrap">${ex.svg}</div>
+            <div class="ex-meta">${escapeHtml(ex.zone)} · ${sets} series · ${escapeHtml(reps)}</div>
+            <h3 class="ex-title">${escapeHtml(ex.name)}</h3>
+            <p class="ex-tip">${escapeHtml(ex.tip)}</p>
+          </div>
+        `;
+      }).join("");
+
+      const dist = Number(user.targetDistance) || 10;
+      document.getElementById("strategyTitle").textContent = `Estrategia Progresiva para ${dist} km (${user.targetDate})`;
+      document.getElementById("strategySubtitle").textContent = `Ritmo base estimado: ${zones.goal.text} · Cinta: ${zones.goal.treadmill}`;
+
+      const seg1 = Math.max(1, Number((dist * 0.30).toFixed(1)));
+      const seg2 = Math.max(seg1 + 0.5, Number((dist * 0.70).toFixed(1)));
+      const strategyBlocks = [
+        {
+          title: `Tramo 1 (0 a ${seg1} km) · Salida contenida`,
+          text: `Arranca ${formatPaceSec(zones.goal.maxSec + 12)}–${formatPaceSec(zones.goal.maxSec)} (o ${(Number(paceToKmh(zones.goal.maxSec + 12))).toFixed(1)} km/h en cinta). Evita salir acelerada por los nervios.`
+        },
+        {
+          title: `Tramo 2 (${seg1} a ${seg2} km) · Ritmo de crucero`,
+          text: `Estabiliza en ${zones.goal.text} (${zones.goal.treadmill}). Mantén hombros sueltos, cadencia constante y respiración rítmica.`
+        },
+        {
+          title: `Tramo 3 (${seg2} a ${dist} km) · Gestión y cierre`,
+          text: `Evalúa sensaciones en el tramo intermedio; si vas entera, sostén el ritmo objetivo y cierra con progresión limpia hasta la meta.`
+        },
+        {
+          title: "Claves prácticas de día objetivo",
+          text: "No estrenes zapatillas ni geles/bebidas el día objetivo; desayuna con antelación conocida y calienta 8–10 minutos suaves."
+        }
+      ];
+
+      document.getElementById("strategyList").innerHTML = strategyBlocks.map((b) => `
+        <div class="km-item">
+          <strong>${escapeHtml(b.title)}</strong>
+          <div style="margin-top:4px; color:var(--muted);">${escapeHtml(b.text)}</div>
+        </div>
+      `).join("");
+    }
+
+    function handleSessionAction(weekNum, dayIndex, action) {
+      const user = getUser();
+      const weekObj = BASE_WEEKS[weekNum - 1];
+      const dayObj = weekObj.days[dayIndex];
+      const key = `w${weekNum}_d${dayIndex}`;
+      const existing = user.logs[key] || { status: "pending", rpe: "", notes: "", feedback: null };
+
+      const rpeInput = document.getElementById(`rpe_${key}`);
+      const noteInput = document.getElementById(`note_${key}`);
+      const rpeVal = rpeInput ? rpeInput.value.trim() : existing.rpe;
+      const noteVal = noteInput ? noteInput.value.trim() : existing.notes;
+
+      const nextStatus = action === "save-only"
+        ? (existing.status === "pending" ? "done" : existing.status)
+        : (existing.status === action ? "pending" : action);
+
+      const updatedLog = {
+        status: nextStatus,
+        rpe: rpeVal,
+        notes: noteVal,
+        feedback: null
+      };
+
+      user.logs[key] = updatedLog;
+      const comp = getComputedDay(user, weekObj, dayObj, dayIndex);
+
+      if (nextStatus !== "pending") {
+        const fb = buildSessionFeedback(user, weekObj, dayObj, comp);
+        updatedLog.feedback = fb;
+        user.lastFeedback = {
+          ...fb,
+          sessionLabel: `${dayObj.day} (S${weekNum}) · ${dayObj.title}`
+        };
+      }
+
+      saveState();
+      renderAll();
+      showToast(nextStatus === "pending" ? "Registro limpiado" : "Sesión guardada y analizada");
+    }
+
+    function openProfileModal() {
+      const user = getUser();
+      const selectUser = document.getElementById("selectExistingUser");
+      selectUser.innerHTML = Object.values(state.users).map((u) => `
+        <option value="${escapeAttr(u.id)}" ${u.id === user.id ? "selected" : ""}>${escapeHtml(u.name)}</option>
+      `).join("");
+
+      document.getElementById("newUserName").value = "";
+      document.getElementById("cfgName").value = user.name;
+      document.getElementById("cfgGoalPreset").value = user.goalPreset || "10k";
+      document.getElementById("cfgStartDate").value = user.startDate;
+      document.getElementById("cfgTargetDate").value = user.targetDate;
+      document.getElementById("cfgTargetDistance").value = user.targetDistance;
+      document.getElementById("cfg5kSec").value = user.pace5kSec;
+      document.getElementById("cfg5kFormatted").textContent = `Equivale a ${formatTimeMMSS(user.pace5kSec)} en 5 km`;
+      document.getElementById("cfgMainGoal").value = user.mainGoal;
+      document.getElementById("cfgSecondaryGoal").value = user.secondaryGoal;
+      document.getElementById("cfgPreferredEnv").value = user.preferredEnv || "both";
+
+      const modal = document.getElementById("profileModal");
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeProfileModal() {
+      const modal = document.getElementById("profileModal");
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function openCloudModal() {
+      document.getElementById("fbApiKey").value = state.cloud.apiKey || "";
+      document.getElementById("fbAuthDomain").value = state.cloud.authDomain || "";
+      document.getElementById("fbProjectId").value = state.cloud.projectId || "";
+      document.getElementById("fbAppId").value = state.cloud.appId || "";
+      document.getElementById("fbEmail").value = state.cloud.email || "";
+      document.getElementById("fbSyncEnabled").value = state.cloud.mode || "local";
+      const modal = document.getElementById("cloudModal");
+      modal.classList.add("open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeCloudModal() {
+      const modal = document.getElementById("cloudModal");
+      modal.classList.remove("open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function escapeAttr(str) {
+      return String(str || "").replace(/"/g, "&quot;");
+    }
+
+    function bindEvents() {
+      document.getElementById("weekNav").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-week]");
+        if (!btn) return;
+        state.selectedWeek = Number(btn.dataset.week);
+        state.viewMode = "single";
+        saveState();
+        renderAll();
+      });
+
+      document.querySelectorAll('[data-env]').forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.envMode = btn.dataset.env;
+          getUser().preferredEnv = state.envMode;
+          saveState();
+          renderAll();
+        });
+      });
+
+      document.getElementById("viewSingleBtn").addEventListener("click", () => {
+        state.viewMode = "single";
+        saveState();
+        renderAll();
+      });
+
+      document.getElementById("viewAllBtn").addEventListener("click", () => {
+        state.viewMode = "all";
+        saveState();
+        renderAll();
+      });
+
+      document.getElementById("weeksContainer").addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-action]");
+        if (!btn) return;
+        handleSessionAction(Number(btn.dataset.week), Number(btn.dataset.day), btn.dataset.action);
+      });
+
+      document.querySelectorAll('[data-strength-tab]').forEach((btn) => {
+        btn.addEventListener("click", () => {
+          state.strengthTab = btn.dataset.strengthTab;
+          saveState();
+          renderAll();
+        });
+      });
+
+      document.getElementById("openProfileBtn").addEventListener("click", openProfileModal);
+      document.getElementById("closeProfileBtn").addEventListener("click", closeProfileModal);
+
+      document.getElementById("profileModal").addEventListener("click", (e) => {
+        if (e.target.id === "profileModal") closeProfileModal();
+      });
+
+      document.getElementById("selectExistingUser").addEventListener("change", (e) => {
+        state.activeUserId = e.target.value;
+        state.envMode = getUser().preferredEnv || "both";
+        saveState();
+        renderAll();
+        openProfileModal();
+        showToast(`Perfil activo: ${getUser().name}`);
+      });
+
+      document.getElementById("createUserBtn").addEventListener("click", () => {
+        const rawName = document.getElementById("newUserName").value.trim();
+        if (!rawName) {
+          showToast("Escribe un nombre para el nuevo usuario");
+          return;
+        }
+        const id = `${rawName.toLowerCase().replace(/[^a-z0-9]+/g, "_")}_${Date.now().toString().slice(-4)}`;
+        const preset = document.getElementById("cfgGoalPreset").value || "10k";
+        state.users[id] = defaultUserProfile(id, rawName, preset);
+        state.activeUserId = id;
+        saveState();
+        renderAll();
+        openProfileModal();
+        showToast(`Usuario "${rawName}" creado`);
+      });
+
+      document.getElementById("cfgGoalPreset").addEventListener("change", (e) => {
+        const preset = GOAL_PRESETS[e.target.value];
+        if (!preset) return;
+        document.getElementById("cfgTargetDistance").value = preset.targetDistance;
+        document.getElementById("cfgMainGoal").value = preset.mainGoal;
+        document.getElementById("cfgSecondaryGoal").value = preset.secondaryGoal;
+      });
+
+      document.getElementById("cfg5kSec").addEventListener("input", (e) => {
+        const sec = Number(e.target.value) || 1500;
+        document.getElementById("cfg5kFormatted").textContent = `Equivale a ${formatTimeMMSS(sec)} en 5 km`;
+      });
+
+      document.getElementById("saveProfileBtn").addEventListener("click", () => {
+        const user = getUser();
+        user.name = document.getElementById("cfgName").value.trim() || user.name;
+        user.goalPreset = document.getElementById("cfgGoalPreset").value;
+        user.startDate = document.getElementById("cfgStartDate").value || user.startDate;
+        user.targetDate = document.getElementById("cfgTargetDate").value || user.targetDate;
+        user.targetDistance = Math.max(1, Number(document.getElementById("cfgTargetDistance").value) || 10);
+        user.pace5kSec = Math.max(750, Number(document.getElementById("cfg5kSec").value) || 1500);
+        user.mainGoal = document.getElementById("cfgMainGoal").value.trim() || user.mainGoal;
+        user.secondaryGoal = document.getElementById("cfgSecondaryGoal").value.trim() || user.secondaryGoal;
+        user.preferredEnv = document.getElementById("cfgPreferredEnv").value;
+        state.envMode = user.preferredEnv;
+
+        saveState();
+        renderAll();
+        closeProfileModal();
+        showToast("Perfil y objetivos actualizados");
+      });
+
+      document.getElementById("resetCurrentUserBtn").addEventListener("click", () => {
+        const user = getUser();
+        user.logs = {};
+        user.lastFeedback = null;
+        saveState();
+        renderAll();
+        closeProfileModal();
+        showToast(`Registros de ${user.name} restablecidos`);
+      });
+
+      document.getElementById("openCloudBtn").addEventListener("click", openCloudModal);
+      document.getElementById("closeCloudBtn").addEventListener("click", closeCloudModal);
+
+      document.getElementById("cloudModal").addEventListener("click", (e) => {
+        if (e.target.id === "cloudModal") closeCloudModal();
+      });
+
+      document.getElementById("saveCloudBtn").addEventListener("click", () => {
+        state.cloud.apiKey = document.getElementById("fbApiKey").value.trim();
+        state.cloud.authDomain = document.getElementById("fbAuthDomain").value.trim();
+        state.cloud.projectId = document.getElementById("fbProjectId").value.trim();
+        state.cloud.appId = document.getElementById("fbAppId").value.trim();
+        state.cloud.email = document.getElementById("fbEmail").value.trim();
+        state.cloud.mode = document.getElementById("fbSyncEnabled").value;
+        saveState();
+        renderAll();
+        closeCloudModal();
+        showToast("Ajustes de nube guardados");
+      });
+
+      document.getElementById("testCloudSyncBtn").addEventListener("click", () => {
+        state.cloud.apiKey = document.getElementById("fbApiKey").value.trim();
+        state.cloud.authDomain = document.getElementById("fbAuthDomain").value.trim();
+        state.cloud.projectId = document.getElementById("fbProjectId").value.trim();
+        state.cloud.appId = document.getElementById("fbAppId").value.trim();
+        state.cloud.email = document.getElementById("fbEmail").value.trim();
+        state.cloud.mode = document.getElementById("fbSyncEnabled").value;
+        saveState();
+        renderAll();
+        if (state.cloud.mode === "cloud" && state.cloud.projectId) {
+          showToast(`Sincronización local/nube preparada para ${state.cloud.projectId}`);
+        } else {
+          showToast("Guardado en modo navegador local");
+        }
+      });
+
+      document.getElementById("exportJsonBtn").addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `runcoach_v3_2_${getUser().name.toLowerCase()}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast("Respaldo JSON exportado");
+      });
+
+      document.getElementById("importJsonBtn").addEventListener("click", () => {
+        document.getElementById("importFileInput").click();
+      });
+
+      document.getElementById("importFileInput").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const imported = JSON.parse(reader.result);
+            if (imported && imported.users) {
+              state = { ...createInitialState(), ...imported };
+              saveState();
+              renderAll();
+              showToast("Datos importados correctamente");
+            } else {
+              showToast("El archivo JSON no tiene el formato esperado");
+            }
+          } catch (err) {
+            showToast("No se pudo leer el archivo JSON");
+          }
+        };
+        reader.readAsText(file);
+        e.target.value = "";
+      });
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => {
+        renderAll();
+        bindEvents();
+      });
+    } else {
+      renderAll();
+      bindEvents();
+    }
+  </script>
+</body>
+</html>
